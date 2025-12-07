@@ -18,13 +18,18 @@ const app = express();
 const port = process.env.PORT || 7000;
 app.use("/images", express.static(path.join(process.cwd(), "images")));
 
-// ✅ Enable CORS FIRST — before routes
 const corsOptions = {
-  origin: ["https://naugespafrontend.netlify.app"],
-
-  credentials: true,
+  origin: "https://naugespafrontend.netlify.app",  // single string is enough
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // allow these methods
+  allowedHeaders: ["Content-Type", "Authorization"],    // allow these headers
+  credentials: true
 };
+
+// Enable CORS for all routes
 app.use(cors(corsOptions));
+
+// Handle preflight OPTIONS requests for all routes
+app.options("*", cors(corsOptions));
 
 app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ limit: "100mb", extended: true }));
