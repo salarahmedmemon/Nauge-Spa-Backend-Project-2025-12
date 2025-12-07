@@ -15,7 +15,7 @@ import path from "path";
 
 dotenv.config();
 const app = express();
-const port = 7000;
+const port = process.env.PORT || 7000;
 app.use("/images", express.static(path.join(process.cwd(), "images")));
 
 // ✅ Enable CORS FIRST — before routes
